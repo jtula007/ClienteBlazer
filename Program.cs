@@ -21,6 +21,7 @@ namespace DeptosES.ClienteBlazor
 
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:44352/api/") });
             builder.Services.AddScoped<IDepartamentoService, DepartamentoService>();
+            builder.Services.AddScoped<IMunicipioService, MunicipioService>();
 
             builder.Services.AddMudServices(); //importación de los servicios de MudBlazor
 
