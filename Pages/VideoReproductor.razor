@@ -1,0 +1,42 @@
+﻿@page "/videoplayer/{id:int}"
+@using Models
+@using Services
+@inject IVideoService VideoService
+
+<h3>Video Reproductor</h3>
+
+@if (video == null)
+{
+    <p><em>Cargando...</em></p>
+}
+else
+{
+    <MudCard>
+        <MudCardHeader Class="blue lighten-2">
+            <CardHeaderContent>
+                <MudText Typo="Typo.h6">@video.Nombre</MudText>
+            </CardHeaderContent>
+        </MudCardHeader>
+        <MudCardContent>
+            <video controls width="60%">
+                <source src=@video.Url />
+            </video>
+        </MudCardContent>
+        <MudCardActions Class="center">
+            <MudText Typo="Typo.h6">@video.Genero</MudText>
+        </MudCardActions>
+    </MudCard>
+}
+
+@code {
+    [Parameter]
+    public int id { get; set; }
+
+    Video video;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (id > 0)
+            video = await VideoService.GetById(id);
+    }
+}

@@ -7,7 +7,8 @@
         <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
         <MudText Typo="Typo.h5" Class="ml-3">Municipios ES</MudText>
         <MudSpacer />
-        <MudIconButton Icon="@Icons.Material.Filled.MoreVert" Color="Color.Inherit" Edge="Edge.End" />
+        <MudThemeProvider @bind-IsDarkMode="@_isDarkMode" Theme="_theme" />
+        <MudSwitch @bind-Checked="@_isDarkMode" ThumbIcon="@(_isDarkMode==true ? Icons.Material.Filled.DarkMode : Icons.Material.Filled.WbSunny)" ThumbIconColor="@(_isDarkMode==true ? Color.Dark : Color.Warning)"></MudSwitch>
     </MudAppBar>
     <MudDrawer Class="pa-4 indigo lighten-3 shades-text text-white" @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Always" Elevation="2">
         <NavMenu></NavMenu>
@@ -20,6 +21,9 @@
 </MudLayout>
 
 @code {
+    private MudTheme _theme = new();
+    private bool _isDarkMode = true;
+
     bool _drawerOpen = true;
 
     void DrawerToggle()

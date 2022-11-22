@@ -1,0 +1,43 @@
+﻿@page "/videolist"
+@using Models
+@using Services
+@inject IVideoService VideoService
+
+<h3>Vídeos en lista</h3>
+
+@if (videos == null)
+{
+    <p><em>Cargando...</em></p>
+}
+else
+{
+    <MudGrid>
+        @foreach (var item in videos)
+        {
+            <MudItem xs="12" sm="10" md="6" lg="4">
+                <MudCard>
+                    <MudCardHeader Class="blue darken-1">
+                        <CardHeaderContent>
+                            <MudText Typo="Typo.h6">@item.Nombre</MudText>
+                        </CardHeaderContent>
+                    </MudCardHeader>
+                    <MudCardContent>
+                        <MudText Typo="Typo.body2">Género: @item.Genero</MudText>
+                    </MudCardContent>
+                    <MudCardActions>
+                        <MudButton Link="@($"/videoplayer/{item.Id}")" Variant="Variant.Outlined" Color="Color.Tertiary"
+                                   Class="text-center">Reproducir</MudButton>
+                    </MudCardActions>
+                </MudCard>
+            </MudItem>
+        }
+    </MudGrid>
+}
+
+@code {
+    IEnumerable<Video> videos = new List<Video>();
+    protected override async Task OnInitializedAsync()
+    {
+        videos = await VideoService.GetAll();
+    }
+}

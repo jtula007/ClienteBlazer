@@ -1,0 +1,43 @@
+﻿@page "/player/{id:int}"
+@using Models
+@using Services
+@inject IAudioService AudioService
+
+<h3>Reproductor</h3>
+
+@if (audio == null)
+{
+    <p><em>Cargando...</em></p>
+}
+else
+{
+    <MudCard>
+        <MudCardHeader Class="blue lighten-2">
+            <CardHeaderContent>
+                <MudText Typo="Typo.h6">@audio.Nombre</MudText>
+            </CardHeaderContent>
+        </MudCardHeader>
+        <MudCardContent>
+            <audio controls>
+                <source src=@audio.Url />
+            </audio>
+        </MudCardContent>
+        <MudCardActions Class="center">
+            <MudText Typo="Typo.h6">@audio.Genero</MudText>
+        </MudCardActions>
+    </MudCard>
+}
+
+
+@code {
+    [Parameter]
+    public int id { get; set; }
+
+    Audio audio;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (id > 0)
+            audio = await AudioService.GetById(id);
+    }
+}
